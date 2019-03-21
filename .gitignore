@@ -1,0 +1,14 @@
+# .env files
+*.env
+
+# Node.JS modules
+/node_modules
+
+# package-lock.json
+package-lock.json
+
+# start.bat
+start.bat
+
+# .git folder
+/.git

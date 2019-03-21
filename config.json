@@ -1,0 +1,8 @@
+{
+    "prefix": "!",
+    "game": {
+        "active": true,
+        "name": "être développé",
+        "type": "PLAYING"
+    }
+}

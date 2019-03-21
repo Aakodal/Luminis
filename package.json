@@ -1,0 +1,31 @@
+{
+  "name": "luminis",
+  "version": "1.0.0",
+  "description": "Luminis Discord bot",
+  "keywords": [
+    "luminis",
+    "discord",
+    "bot"
+  ],
+  "license": "Apache2.0",
+  "main": "core.js",
+  "author": "Neshell",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeshellDev/Luminis-DiscordBot.git"
+  },
+  "scripts": {
+    "start": "node core.js"
+  },
+  "bugs": {
+    "url": "https://github.com/NeshellDev/Luminis-DiscordBot/issues"
+  },
+  "dependencies": {
+    "colors": "^1.2.1",
+    "discord.js": "11.4.2",
+    "moment": "^2.21.1",
+    "ms": "^2.1.1",
+    "dotenv": "*"
+  },
+  "devDependencies": {}
+}
