@@ -1,0 +1,14 @@
+const { prefix } = require('../require.js');
+const { createEmbed } = require('../lib/functions.js');
+
+module.exports = {
+    name: 'name',
+    aliases: [ 'alias' ],
+    description: "desc",
+    usage: 'usage',
+    exemple: 'exemple',
+    access: 'permission',
+    execute(message, args){
+        // code
+    }
+}

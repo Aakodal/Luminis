@@ -1,6 +1,17 @@
-const { prefix, token, Discord, client, commands, config } = require('./require.js');
+const { prefix, token, Discord, client,  config } = require('./require.js');
+const { createEmbed } = require('./lib/functions.js');
+const fs = require('fs');
 const colors = require('colors');
 const moment = require('moment');
+
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+}
 
 client.on('ready', () => {
     if(config.game.active == true){
@@ -18,6 +29,25 @@ client.on('ready', () => {
     console.log('|              Current game: '.cyan + config.game.name.green + '                 |'.cyan);
     console.log('|                                                           |'.cyan);
     console.log('\\-----------------------------------------------------------/'.cyan);
+});
+
+client.on('message', message => {
+    if(!message.content.startsWith(prefix) || message.author.bot || !message.guild) return;
+
+    const args = message.content.slice(prefix.length).split(" ");
+    const command = args[0].toLowerCase();
+
+    if(!client.commands.has(command)){
+        let text = "Cette commande n'existe pas.";
+        return message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+    }
+
+    try {
+        client.commands.get(command).execute(message, args);
+    } catch(err) {
+        let text = "Une erreur est survenue :\n\n" + err;
+        message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+    }
 });
 
 client.login(token);
