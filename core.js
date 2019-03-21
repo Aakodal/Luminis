@@ -29,10 +29,14 @@ client.on('ready', () => {
     console.log('|              Current game: '.cyan + config.game.name.green + '                 |'.cyan);
     console.log('|                                                           |'.cyan);
     console.log('\\-----------------------------------------------------------/'.cyan);
+
+    const cookies = Math.ceil(Math.random() * (50 - 0) + 0);
 });
 
 client.on('message', message => {
     if(!message.content.startsWith(prefix) || message.author.bot || !message.guild) return;
+
+    message.delete();
 
     const args = message.content.slice(prefix.length).split(" ");
     const command = args[0].toLowerCase();
