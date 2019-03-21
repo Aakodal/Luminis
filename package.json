@@ -12,13 +12,13 @@
   "author": "Neshell",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NeshellDev/Luminis-DiscordBot.git"
+    "url": "git+https://github.com/NeshellDev/Luminis.git"
   },
   "scripts": {
     "start": "node core.js"
   },
   "bugs": {
-    "url": "https://github.com/NeshellDev/Luminis-DiscordBot/issues"
+    "url": "https://github.com/NeshellDev/Luminis/issues"
   },
   "dependencies": {
     "colors": "^1.2.1",
