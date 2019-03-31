@@ -3,6 +3,74 @@
     "game": {
         "active": true,
         "name": "être développé",
-        "type": "PLAYING"
+        "type": "LISTENING"
+    },
+
+    "logs": {
+        "messageCreate": {
+            "active": false,
+            "channel": "561647315946045460"
+        },
+        "messageDelete": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "messageUpdate": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "messagePurge": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "userJoin": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "userLeave": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "userNick": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "roleCreate": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "roleDelete": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "roleUpdate": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "channelCreate": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "channelDelete": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "channelUpdate": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "emojiCreate": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "emojiDelete": {
+            "active": true,
+            "channel": "561647315946045460"
+        },
+        "emojiUpdate": {
+            "active": true,
+            "channel": "561647315946045460"
+        }
     }
+    
 }

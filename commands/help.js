@@ -9,7 +9,7 @@ module.exports = {
     execute(message, args){
         const embed = new Discord.RichEmbed().setColor(0xB5E655);
         if(args[1]) {
-            if(client.commands.get(args[1]).name){
+            if(client.commands.get(args[1]) != null){
                 if(client.commands.get(args[1]).access != null) {
                     if(message.member.hasPermission(client.commands.get(args[1]).access)) {
                         embed.setTitle(`${prefix}${args[1]} - Informations`);

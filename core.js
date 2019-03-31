@@ -1,4 +1,4 @@
-const { prefix, token, Discord, client,  config } = require('./require.js');
+const { prefix, token, Discord, client, config } = require('./require.js');
 const { createEmbed } = require('./lib/functions.js');
 const fs = require('fs');
 const colors = require('colors');
@@ -11,6 +11,12 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
+}
+
+const logEvents = fs.readdirSync('./lib/log/').filter(file => file.endsWith('.js'));
+
+for (const file of logEvents) {
+    const logs = require(`./lib/log/${file}`);
 }
 
 client.on('ready', () => {
@@ -30,7 +36,6 @@ client.on('ready', () => {
     console.log('|                                                           |'.cyan);
     console.log('\\-----------------------------------------------------------/'.cyan);
 
-    const cookies = Math.ceil(Math.random() * (50 - 0) + 0);
 });
 
 client.on('message', message => {
@@ -39,19 +44,40 @@ client.on('message', message => {
     message.delete();
 
     const args = message.content.slice(prefix.length).split(" ");
-    const command = args[0].toLowerCase();
+    const commandName = args[0].toLowerCase();
 
-    if(!client.commands.has(command)){
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+    if(!command){
         let text = "Cette commande n'existe pas.";
         return message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
     }
 
-    try {
-        client.commands.get(command).execute(message, args);
-    } catch(err) {
-        let text = "Une erreur est survenue :\n\n" + err;
-        message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+    if(command.access){
+
+        if(message.member.hasPermission(command.access) > 0) {
+    
+            try {
+                command.execute(message, args);
+            } catch(err) {
+                let text = "Une erreur est survenue :\n\n" + err;
+                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+            }
+
+        } else {
+            let text = "Vous n'avez pas la permission requise.";
+            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+        }
+
+    } else {
+        try {
+            command.execute(message, args);
+        } catch(err) {
+            let text = "Une erreur est survenue :\n\n" + err;
+            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+        }
     }
+
 });
 
 client.login(token);

@@ -1,7 +1,5 @@
 const { prefix, client } = require('../require.js');
 
-const { cookies } = require('../core.js');
-
 module.exports = {
     name: 'info',
     description: "Affiche les informations du bot",
