@@ -1,0 +1,76 @@
+{
+    "prefix": "Prefix here",
+    "game": {
+        "active": "true or false, without quotes",
+        "name": "Activity here",
+        "type": "Type of activity. Must be PLAYING, LISTENING, WATCHING, or STREAMING"
+    },
+
+    "logs": {
+        "messageCreate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "messageDelete": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "messageUpdate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "messagePurge": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "userJoin": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "userLeave": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "userNick": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "roleCreate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "roleDelete": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "roleUpdate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "channelCreate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "channelDelete": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "channelUpdate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "emojiCreate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "emojiDelete": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        },
+        "emojiUpdate": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here"
+        }
+    }
+    
+}
