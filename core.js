@@ -1,8 +1,7 @@
-const { prefix, token, Discord, client, config } = require('./require.js');
+const { prefix, token, Discord, client, config, dateFns } = require('./require.js');
 const { createEmbed } = require('./lib/functions.js');
 const fs = require('fs');
 const colors = require('colors');
-const moment = require('moment');
 
 client.commands = new Discord.Collection();
 
@@ -28,7 +27,7 @@ client.on('ready', () => {
         }
     }
 
-    let time = moment(this.startTime).format('H:mm:ss');
+    let time = dateFns.format(new Date(), 'H:mm:ss');
     console.log('/-------------------'.cyan + " Started at ".cyan + time.green +" -------------------\\".cyan);
     console.log('|                                                           |'.cyan);
     console.log('|           '.cyan + 'Luminis'.magenta + " | Discord bot by ".cyan + "Neshell".red + ".".cyan + "               |".cyan);
@@ -55,18 +54,38 @@ client.on('message', message => {
 
     if(command.access){
 
-        if(message.member.hasPermission(command.access) > 0) {
-    
-            try {
-                command.execute(message, args);
-            } catch(err) {
-                let text = "Une erreur est survenue :\n\n" + err;
-                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+        if(command.access !== "BOTOWNER") {
+
+            if(message.member.hasPermission(command.access) > 0) {
+        
+                try {
+                    command.execute(message, args);
+                } catch(err) {
+                    let text = "Une erreur est survenue :\n\n" + err;
+                    message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                }
+
+            } else {
+                let text = "Vous n'avez pas la permission requise.";
+                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
             }
 
         } else {
-            let text = "Vous n'avez pas la permission requise.";
-            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+
+            if(message.author.id === config.botOwner) {
+        
+                try {
+                    command.execute(message, args);
+                } catch(err) {
+                    let text = "Une erreur est survenue :\n\n" + err;
+                    message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                }
+
+            } else {
+                let text = "Vous n'avez pas la permission requise.";
+                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+            }
+
         }
 
     } else {
@@ -74,7 +93,7 @@ client.on('message', message => {
             command.execute(message, args);
         } catch(err) {
             let text = "Une erreur est survenue :\n\n" + err;
-            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text))
+            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
         }
     }
 

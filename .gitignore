@@ -12,3 +12,12 @@ start.bat
 
 # .git folder
 /.git
+
+# todo file
+todo
+
+# Just tests files
+/tests
+
+# sqlite file
+json.sqlite

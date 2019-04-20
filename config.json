@@ -1,5 +1,6 @@
 {
     "prefix": "!",
+    "botOwner": "163959412937981952",
     "game": {
         "active": true,
         "name": "être développé",
@@ -31,7 +32,7 @@
             "active": true,
             "channel": "561647315946045460"
         },
-        "userNick": {
+        "userUpdate": {
             "active": true,
             "channel": "561647315946045460"
         },
@@ -70,6 +71,19 @@
         "emojiUpdate": {
             "active": true,
             "channel": "561647315946045460"
+        }
+    },
+
+    "modLogs": {
+        "warn": {
+            "active": true,
+            "channel": "561647315946045460",
+            "dm": true
+        },
+        "kick": {
+            "active": true,
+            "channel": "561647315946045460",
+            "dm": true
         }
     }
     

@@ -1,5 +1,6 @@
 {
     "prefix": "Prefix here",
+    "botOwner": "Your Discord ID here",
     "game": {
         "active": "true or false, without quotes",
         "name": "Activity here",
@@ -31,7 +32,7 @@
             "active": "true or false, without quotes",
             "channel": "Channel ID here"
         },
-        "userNick": {
+        "userUpdate": {
             "active": "true or false, without quotes",
             "channel": "Channel ID here"
         },
@@ -70,6 +71,19 @@
         "emojiUpdate": {
             "active": "true or false, without quotes",
             "channel": "Channel ID here"
+        }
+    },
+
+    "modLogs": {
+        "warn": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here",
+            "dm": "true or false, without quotes"
+        },
+        "kick": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here",
+            "dm": "true or false, without quotes"
         }
     }
     

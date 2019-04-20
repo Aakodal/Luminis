@@ -1,9 +1,9 @@
-const { prefix, client } = require('../require.js');
+const { prefix, client, infos } = require('../require.js');
 
 module.exports = {
     name: 'info',
     description: "Affiche les informations du bot",
-    usage: '!info',
+    usage: prefix+'info',
     execute(message, args){
         const embed = {
 			"color": 0xB5E655,
@@ -14,12 +14,12 @@ module.exports = {
 			"fields": [
 				{
 					"name": "Auteur",
-					"value": "Neshell",
+					"value": infos.author,
 					"inline": true
 				},
 				{
 					"name": "Version",
-					"value": '1.0.0',
+					"value": infos.version,
 					"inline": true
 				},
 				{
@@ -44,12 +44,12 @@ module.exports = {
                 },
 				{
 					"name": "Équipe",
-					"value": "__Neshell :__ auteur/développeur"
+					"value": "__" + infos.author + " :__ auteur/développeur"
 				},
 			],
 			"footer": {
-				"icon_url": "https://media.discordapp.net/icons/287900963472146433/8ad507e94281b055a5d5a154a3de5fc3.jpg",
-				"text": "© Luminis - Neshell | Tous droits réservés"
+				"icon_url": message.author.avatarURL,
+				"text": "© Luminis - " + infos.author + " | Tous droits réservés. Demandé par "+ message.author.tag
 			}
 		}
 
