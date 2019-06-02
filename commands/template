@@ -1,5 +1,5 @@
 const { prefix } = require('../require.js');
-const { createEmbed } = require('../lib/functions.js');
+const { sendEmbed, sendError } = require('../lib/functions.js');
 
 module.exports = {
     name: 'name',

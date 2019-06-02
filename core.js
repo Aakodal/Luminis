@@ -1,6 +1,5 @@
-const { prefix, token, Discord, client, config, dateFns } = require('./require.js');
-const { createEmbed } = require('./lib/functions.js');
-const fs = require('fs');
+const { prefix, token, Discord, client, config, dateFns, fs } = require('./require.js');
+const { sendError, output } = require('./lib/functions.js');
 const colors = require('colors');
 
 client.commands = new Discord.Collection();
@@ -20,10 +19,10 @@ for (const file of logEvents) {
 
 client.on('ready', () => {
     if(config.game.active == true){
-        if(config.game.type != "PLAYING" || config.game.type != "STREAMING" || config.game.type != "WATCHING" || config.game.type != "LISTENING"){
-            client.user.setActivity(config.game.name);
+        if(config.game.type == "PLAYING" || config.game.type == "STREAMING" || config.game.type == "WATCHING" || config.game.type == "LISTENING"){
+            client.user.setActivity(config.game.name, { type: `${config.game.type}` });
         } else {
-            client.user.setActivity(config.game.name, { type: config.game.type });
+            client.user.setActivity(config.game.name);
         }
     }
 
@@ -34,6 +33,44 @@ client.on('ready', () => {
     console.log('|              Current game: '.cyan + config.game.name.green + '                 |'.cyan);
     console.log('|                                                           |'.cyan);
     console.log('\\-----------------------------------------------------------/'.cyan);
+    output("Bot démarré à " + time +".");
+
+    if(config.muteRole.active) {
+        client.guilds.array().forEach(server => {
+            let muterole = server.roles.find(role => role.name === config.muteRole.name);
+            if(muterole) {
+                output(`Le rôle ${config.muteRole.name} a bien été trouvé.`);
+            } else {
+                output(`Le rôle ${config.muteRole.name} n'a pas été trouvé. Création du rôle en cours...`);
+                // récupération des permissions
+                let permissions = config.muteRole.permissions;
+                // on ne récupère que les true
+                let permstrue = Object.entries(permissions).filter(permission => permission[1]).map(permission => permission[0]);
+                // on définit des permissions de base
+                let base = [ "CONNECT", "READ_MESSAGE_HISTORY", "VIEW_CHANNEL" ];
+                server.createRole({
+                    "name": config.muteRole.name,
+                    "permissions": [...base, ...permstrue]
+                    // On ajoute uniquement les permissions qui sont déclarées true (permstrue)
+                }).then(() => {
+                    muterole = server.roles.find(role => role.name === config.muteRole.name);
+                    output("Rôle créé. Configuration des salons...");
+                    server.channels.forEach(channel => {
+                        try {
+                            channel.overwritePermissions(muterole, permissions);
+                            // On ajoute les permissions
+                        } catch(err) {
+                            output("Une erreur est survenue :\n\n" + err);
+                        }
+                    });
+                    output("Configuration terminée. Rôle prêt à l'emploi.");
+                }).catch(err => {
+                    output("Une erreur est survenue :\n\n" + err);
+                });
+                
+            }
+        });
+    }
 
 });
 
@@ -48,8 +85,7 @@ client.on('message', message => {
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
     if(!command){
-        let text = "Cette commande n'existe pas.";
-        return message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+        return sendError("Cette commande n'existe pas.", message);
     }
 
     if(command.access){
@@ -61,13 +97,11 @@ client.on('message', message => {
                 try {
                     command.execute(message, args);
                 } catch(err) {
-                    let text = "Une erreur est survenue :\n\n" + err;
-                    message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                    sendError(`Une erreur est survenue :\n\n + ${err}`, message);
                 }
 
             } else {
-                let text = "Vous n'avez pas la permission requise.";
-                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                sendError("Vous n'avez pas la permission requise.", message);
             }
 
         } else {
@@ -77,13 +111,11 @@ client.on('message', message => {
                 try {
                     command.execute(message, args);
                 } catch(err) {
-                    let text = "Une erreur est survenue :\n\n" + err;
-                    message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                    sendError(`Une erreur est survenue :\n\n + ${err}`, message);
                 }
 
             } else {
-                let text = "Vous n'avez pas la permission requise.";
-                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                sendError("Vous n'avez pas la permission requise.", message);
             }
 
         }
@@ -92,8 +124,7 @@ client.on('message', message => {
         try {
             command.execute(message, args);
         } catch(err) {
-            let text = "Une erreur est survenue :\n\n" + err;
-            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+            sendError(`Une erreur est survenue :\n\n + ${err}`, message);
         }
     }
 

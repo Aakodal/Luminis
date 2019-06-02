@@ -1,10 +1,21 @@
 {
     "prefix": "!",
+    "token": "Mzc0NjA0OTk3ODE3NjYzNDg4.XPPzng.haUfy_-GBvywXuGWB4O3WlleOR4",
     "botOwner": "163959412937981952",
     "game": {
         "active": true,
-        "name": "être développé",
+        "name": "son développement",
         "type": "LISTENING"
+    },
+
+    "botOutputs": {
+        "active": true,
+        "channel": "571611667352256524"
+    },
+
+    "votes": {
+        "anonyme": true,
+        "channel": "574311827580649478"
     },
 
     "logs": {
@@ -74,6 +85,19 @@
         }
     },
 
+    "muteRole": {
+        "name": "Muted",
+        "active": true,
+        "permissions": {
+            "ADD_REACTIONS": false,
+            "ATTACH_FILES": false,
+            "CHANGE_NICKNAME": false,
+            "MENTION_EVERYONE": false,
+            "SEND_MESSAGES": false,
+            "SEND_TTS_MESSAGES": false,
+            "SPEAK": false
+        }
+    },
     "modLogs": {
         "warn": {
             "active": true,

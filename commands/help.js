@@ -1,5 +1,5 @@
 const { prefix, Discord, client, isNumber, config } = require('../require.js');
-const { createEmbed } = require('../lib/functions.js');
+const { sendError } = require('../lib/functions.js');
 
 module.exports = {
     name: 'help',
@@ -46,7 +46,7 @@ module.exports = {
                             });
                         } else {
                             let text = "Vous n'avez pas la permission requise.";
-                            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                            sendError(text, message);
                         }
                     } else {
                         if(message.author.id === config.botOwner) {
@@ -58,7 +58,7 @@ module.exports = {
                             });
                         } else {
                             let text = "Vous n'avez pas la permission requise.";
-                            message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                            sendError(text, message);
                         }
                     }
                 } else {
@@ -70,12 +70,12 @@ module.exports = {
                     });
                 }
                 if(embed.fields.values().next().value) {
-                    embed.setFooter("Demandé par " + message.author.tag, message.author.avatarURL)
+                    embed.setFooter("Demandé par " + message.author.tag, message.author.avatarURL);
                     message.channel.send(embed);
                 }
             } else {
                 let text = "Cette commande n'existe pas.";
-                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message));
+                sendError(text, message);
             }
         } else {
             [...client.commands.values()]
@@ -104,7 +104,7 @@ module.exports = {
 
             stockEmbeds.forEach((page, index) => {
                 page.setTitle(`Commandes disponibles - Page ${index + 1} sur ${stockEmbeds.length}`);
-                page.setFooter("Demandé par " + message.author.tag, message.author.avatarURL)
+                page.setFooter("Demandé par " + message.author.tag, message.author.avatarURL);
             });
         
             let currentPage = args[1] && isNumber(args[1]) && stockEmbeds[+args[1] - 1] ? +args[1] - 1 : 0;
@@ -134,13 +134,13 @@ module.exports = {
                     }
 
                     embedMessage.clearReactions().then(() => {
-                        embedMessage.edit(stockEmbeds[currentPage])
-                        updateReactions(embedMessage, currentPage)
+                        embedMessage.edit(stockEmbeds[currentPage]);
+                        updateReactions(embedMessage, currentPage);
                     });
                 });
             }).catch(err => {
                 let text = "Une erreur est survenue :\n\n" + err;
-                message.channel.send(createEmbed("Erreur", 'client', '', 'dark_red', text, message))
+                sendError(text, message);
             });
         }
     }

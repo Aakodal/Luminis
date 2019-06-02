@@ -1,10 +1,21 @@
 {
     "prefix": "Prefix here",
+    "token": "Your bot token here",
     "botOwner": "Your Discord ID here",
     "game": {
         "active": "true or false, without quotes",
         "name": "Activity here",
         "type": "Type of activity. Must be PLAYING, LISTENING, WATCHING, or STREAMING"
+    },
+
+    "botOutputs": {
+        "active": "true or false, without quotes",
+        "channel": "Channel ID here"
+    },
+
+    "votes": {
+        "anonyme": "true or false, without quotes",
+        "channel": "Channel ID here"
     },
 
     "logs": {
@@ -74,6 +85,19 @@
         }
     },
 
+    "muteRole": {
+        "name": "mute role name",
+        "active": "true or false, without quotes",
+        "permissions": {
+            "ADD_REACTIONS": "true or false, without quotes",
+            "ATTACH_FILES": "true or false, without quotes",
+            "CHANGE_NICKNAME": "true or false, without quotes",
+            "MENTION_EVERYONE": "true or false, without quotes",
+            "SEND_MESSAGES": "true or false, without quotes",
+            "SEND_TTS_MESSAGES": "true or false, without quotes",
+            "SPEAK": "true or false, without quotes"
+        }
+    },
     "modLogs": {
         "warn": {
             "active": "true or false, without quotes",
