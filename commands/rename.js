@@ -5,11 +5,11 @@ module.exports = {
     name: 'rename',
     aliases: [ 'pseudo' ],
     description: "Renomme un membre",
-    usage: prefix+'rename <membre mentionné> <surnom>',
-    exemple: prefix+'rename @Neshell#8701 Dieu vivant',
+    usage: `${prefix}rename <membre mentionné> <surnom>`,
+    exemple: `${prefix}rename @Neshell#8701 Dieu vivant`,
     access: 'MANAGE_NICKNAMES',
     execute(message, args){
-        if(args[2]) {
+        if(args[1]) {
 
             const user = message.mentions.users.first();
             if(user) {
@@ -20,7 +20,7 @@ module.exports = {
 
                     if(member.highestRole.comparePositionTo(message.member.highestRole) < 0 && member.highestRole.comparePositionTo(bot.highestRole) < 0) {
 
-                        const nick = args.slice(2).join(" ");
+                        const nick = args.slice(1).join(" ");
                         if(nick.length <= 32) {
 
                             if(member.nickname !== nick) {

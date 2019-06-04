@@ -4,8 +4,8 @@ const { sendError } = require('../lib/functions.js');
 module.exports = {
     name: 'help',
     description: "Affiche toutes les commandes, leur description ainsi que leur usage",
-    usage: prefix+'help [command]',
-    exemple: prefix+'help || !help info',
+    usage: `${prefix}help [command]`,
+    exemple: `${prefix}help || !help info`,
     execute(message, args){
         let embed = new Discord.RichEmbed().setColor(0xB5E655);
         let stockEmbeds = [];
@@ -33,49 +33,42 @@ module.exports = {
             }
         }
         
-        if(args[1] && isNaN(args[1])) {
-            if(client.commands.get(args[1])){
-                if(client.commands.get(args[1]).access) {
-                    if(client.commands.get(args[1]).access !== "BOTOWNER") {
-                        if(message.member.hasPermission(client.commands.get(args[1]).access)) {
-                            embed.setTitle(`${prefix}${args[1]} - Informations`);
-                            ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
-                                if(client.commands.get(args[1])[property]){
-                                    embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[1])[property]);
-                                }
-                            });
-                        } else {
-                            let text = "Vous n'avez pas la permission requise.";
-                            sendError(text, message);
-                        }
-                    } else {
-                        if(message.author.id === config.botOwner) {
-                            embed.setTitle(`${prefix}${args[1]} - Informations`);
-                            ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
-                                if(client.commands.get(args[1])[property]){
-                                    embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[1])[property]);
-                                }
-                            });
-                        } else {
-                            let text = "Vous n'avez pas la permission requise.";
-                            sendError(text, message);
-                        }
-                    }
-                } else {
-                    embed.setTitle(`${prefix}${args[1]} - Informations`);
+        if(args[0] && isNaN(args[0])) {
+            if(!client.commands.get(args[0])) return sendError("Cette commande n'existe pas.", message);
+
+            if(client.commands.get(args[0]).access) {
+                if(client.commands.get(args[0]).access !== "BOTOWNER") {
+                    if(!message.member.hasPermission(client.commands.get(args[0]).access)) return sendError("Vous n'avez pas la permission requise.", message);
+
+                    embed.setTitle(`${prefix}${args[0]} - Informations`);
                     ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
-                        if(client.commands.get(args[1])[property]){
-                            embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[1])[property]);
-                       }
+                        if(client.commands.get(args[0])[property]){
+                            embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                        }
                     });
-                }
-                if(embed.fields.values().next().value) {
-                    embed.setFooter("Demandé par " + message.author.tag, message.author.avatarURL);
-                    message.channel.send(embed);
+
+                } else {
+                    if(message.author.id !== config.botOwner) return sendError("Vous n'avez pas la permission requise.", message);
+
+                    embed.setTitle(`${prefix}${args[0]} - Informations`);
+                    ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
+                        if(client.commands.get(args[0])[property]){
+                            embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                        }
+                    });
+
                 }
             } else {
-                let text = "Cette commande n'existe pas.";
-                sendError(text, message);
+                embed.setTitle(`${prefix}${args[0]} - Informations`);
+                ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
+                    if(client.commands.get(args[0])[property]){
+                        embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                    }
+                });
+            }
+            if(embed.fields.values().next().value) {
+                embed.setFooter("Demandé par " + message.author.tag, message.author.avatarURL);
+                message.channel.send(embed);
             }
         } else {
             [...client.commands.values()]
@@ -107,7 +100,7 @@ module.exports = {
                 page.setFooter("Demandé par " + message.author.tag, message.author.avatarURL);
             });
         
-            let currentPage = args[1] && isNumber(args[1]) && stockEmbeds[+args[1] - 1] ? +args[1] - 1 : 0;
+            let currentPage = args[0] && isNumber(args[0]) && stockEmbeds[+args[0] - 1] ? +args[0] - 1 : 0;
             let author = message.author;
             
             message.channel.send(stockEmbeds[currentPage]).then(embedMessage => {
@@ -139,8 +132,7 @@ module.exports = {
                     });
                 });
             }).catch(err => {
-                let text = "Une erreur est survenue :\n\n" + err;
-                sendError(text, message);
+                sendError(`Une erreur est survenue :\n\n${err}`, message);
             });
         }
     }

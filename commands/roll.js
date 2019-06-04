@@ -4,8 +4,8 @@ const { sendEmbed, sendError, randInt } = require('../lib/functions.js');
 module.exports = {
     name: 'roll',
     description: "Lance un dé virtuel",
-    usage: prefix+'roll [nombre]d<nombre>',
-    exemple: prefix+'roll 1d6 || !roll d6',
+    usage: `${prefix}roll [nombre]d<nombre>`,
+    exemple: `${prefix}roll 1d6 || !roll d6`,
     execute(message, args){
         const randSentence = {
             '1': "Expecto patronum!",
@@ -19,11 +19,11 @@ module.exports = {
             '9': "Tarentallegra!"
         }
 
-        if(!args[1]) {
+        if(!args[0]) {
             return sendError("Veuillez insérer un argument.", message);
         }
 
-        const parameter = args[1].split('d');
+        const parameter = args[0].split('d');
         const randPhr = randInt(1, Object.values(randSentence).length);
         if(parameter[0] == '') { // ['', 'number']
             if(typeof parseInt(parameter[1]) != "number" || isNaN(parameter[1])) {

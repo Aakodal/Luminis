@@ -5,8 +5,8 @@ module.exports = {
     name: 'name',
     aliases: [ 'alias' ],
     description: "desc",
-    usage: prefix+'usage',
-    exemple: prefix+'exemple',
+    usage: `${prefix}usage`,
+    exemple: `${prefix}exemple`,
     access: 'permission',
     // "BOTOWNER" can be used
     execute(message, args){

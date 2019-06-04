@@ -75,18 +75,16 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
+
     if(!message.content.startsWith(prefix) || message.author.bot || !message.guild) return;
 
-    message.delete();
-
-    const args = message.content.slice(prefix.length).split(" ");
-    const commandName = args[0].toLowerCase();
+    message.delete()
+    
+    const [commandName, ...args] = message.content.toLowerCase().slice(prefix.length).split(/\s+/)
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-    if(!command){
-        return sendError("Cette commande n'existe pas.", message);
-    }
+    if(!command) return sendError("Cette commande n'existe pas.", message);
 
     if(command.access){
 

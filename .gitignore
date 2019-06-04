@@ -10,6 +10,9 @@ start.bat
 # .git folder
 /.git
 
+# .vscode folder
+/.vscode
+
 # todo file
 todo
 

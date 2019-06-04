@@ -3,7 +3,7 @@ const { prefix, client, infos } = require('../require.js');
 module.exports = {
     name: 'info',
     description: "Affiche les informations du bot",
-    usage: prefix+'info',
+    usage: `${prefix}info`,
     execute(message, args){
         const embed = {
 			"color": 0xB5E655,
