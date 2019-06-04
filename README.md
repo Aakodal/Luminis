@@ -10,7 +10,7 @@ then wait until every node module is installed.
 ### Configuration
 Now that node modules are installed, you should edit [config.sample.json](https://github.com/NeshellDev/Luminis/blob/master/config.sample.json) with your preferences and rename it 'config.json' (the original 'config.json' can always be used as a base).
 ### Token
-Next, you must provide your bot's token in [require.js](https://github.com/NeshellDev/Luminis/blob/master/require.js). Just change "process.env.TOKEN" by your token between quotes.
+Next, you must provide your bot's token in [config.json](https://github.com/NeshellDev/Luminis/blob/master/config.sample.json). Just change "your token here" by your token between quotes.
 ### Inviting & permissions
 To invite Luminis on your server, just click here -> https://discordapp.com/oauth2/authorize?client_id=BOT-ID-HERE&permissions=8&scope=bot ; just change the client ID. Luminis must have "Administrator" permission.
 ## Using

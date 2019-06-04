@@ -44,7 +44,8 @@ module.exports = {
                 },
 				{
 					"name": "Équipe",
-					"value": "__" + infos.author + " :__ auteur/développeur"
+					"value": `__${infos.author}:__ auteur/développeur
+					__Piixell/DieuKoukiFactori:__ optimisation/développement`
 				},
 			],
 			"footer": {
