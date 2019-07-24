@@ -3,12 +3,13 @@ const { sendEmbed, sendError } = require('../lib/functions.js');
 
 module.exports = {
     name: 'config',
+    category: 'admin',
     description: "Effectue une vérification sur la configuration",
     usage: `${prefix}config help`,
     exemple: `${prefix}config joinmessage Bienvenue à \${user} !`,
     access: 'ADMINISTRATOR',
     execute(message, args){
-        if(!args[1]) sendError("Veuillez préciser un type de configuration, ou indiquer \"help\" à la suite de la commande.", message);
+        if(!args[0]) return sendError("Veuillez préciser un type de configuration, ou indiquer \"help\" à la suite de la commande.", message);
 
         if(args[0].toLowerCase() === "help") {
             const text = `- verif <type> : vérifie et reconfigure une configuration.\n

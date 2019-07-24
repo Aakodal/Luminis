@@ -1,7 +1,8 @@
 const { prefix, client, infos } = require('../require.js');
 
 module.exports = {
-    name: 'info',
+	name: 'info',
+	category: 'else',
     description: "Affiche les informations du bot",
     usage: `${prefix}info`,
     execute(message, args){

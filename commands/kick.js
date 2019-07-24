@@ -1,14 +1,15 @@
-const { prefix, client, config, Discord } = require('../require.js');
+const { prefix, client, config, Discord, db } = require('../require.js');
 const { sendEmbed, sendError } = require('../lib/functions.js');
 
 module.exports = {
     name: 'kick',
+    category: 'mod',
     description: "Exclue un membre pour la raison précisée",
     usage: `${prefix}kick <membre mentionné> <raison>`,
     exemple: `${prefix}kick @Neshell#8701 A dit "pain au chocolat"`,
     access: 'KICK_MEMBERS',
     async execute(message, args){
-        if(!args[1]) return sendError("Mauvais usage de la commande.\n\n!kick <membre mentionné> <raison>", message);
+        if(!args[1]) return sendError(`Mauvais usage de la commande.\n\n${prefix}kick <membre mentionné> <raison>`, message);
 
         const user = message.mentions.users.first();
         const reason = args.slice(1).join(" ");
@@ -20,9 +21,9 @@ module.exports = {
 
         if(!member) return sendError("Ce membre n'existe pas ou n'est pas sur le serveur.", message);
 
-        if(user === message.author) return sendError("Vous ne pouvez pas vous exclue vous-même.", message);
+        if(user === message.author) return sendError("Vous ne pouvez pas vous exclure vous-même.", message);
 
-        if(!member.highestRole.comparePositionTo(message.member.highestRole) < 0 || !member.highestRole.comparePositionTo(bot.highestRole) < 0) return sendError("Vous ne pouvez pas exclure un membre supérieur ou égal à vous ou à moi.", message);
+        if(member.highestRole.comparePositionTo(message.member.highestRole) >= 0 || member.highestRole.comparePositionTo(bot.highestRole) >= 0) return sendError("Vous ne pouvez pas exclure un membre supérieur ou égal à vous ou à moi.", message);
 
         if(!member.kickable) return sendError("Ce membre n'a pas pu être exclu.", message);
 
@@ -61,6 +62,18 @@ module.exports = {
             }
         }
 
-        await member.kick(reason);
+        try {
+            await db.insert({discord_id: user.id,
+                pseudo: user.username,
+                infraction: reason,
+                type: "kick",
+                created: Date.now(),
+                moderator: message.author.tag
+            }, 'id').into("infractions");
+            await member.kick(reason);
+        } catch(err) {
+            message.guild.owner.send("An error happened when trying to kick ; " + err +"\n\nPlease contact bot author.");
+            console.log("An error happened when trying to kick ; " + err);
+        }
     }
 }

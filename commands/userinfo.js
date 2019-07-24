@@ -3,13 +3,13 @@ const { sendError } = require('../lib/functions.js');
 
 module.exports = {
     name: 'userinfo',
+    category: 'else',
     aliases: [ 'whois' ],
     description: "Affiche diverses informations à propos de vous ou du membre mentionné",
     usage: `${prefix}userinfo [membre mentionné]`,
     exemple: `${prefix}userinfo | ${prefix}userinfo @Neshell#8701`,
     execute(message, args){
-        let member;
-        if(args[0]) member = message.mentions.members.first() || message.member;
+        const member = message.mentions.members.first() || message.member;
 
         let roleColor;
         member.roles.forEach(role => {

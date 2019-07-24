@@ -2,7 +2,7 @@ const { client, Discord, config } = require('../../require.js');
 
 client.on('guildMemberUpdate', (oldMember, newMember) => {
 
-    if(config.logs.userUpdate.active == true) {
+    if(config.logs.userUpdate.active) {
 
         const embed = new Discord.RichEmbed()
             .setAuthor("User Updated", newMember.user.avatarURL)

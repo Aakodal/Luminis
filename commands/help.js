@@ -1,13 +1,14 @@
 const { prefix, Discord, client, isNumber, config } = require('../require.js');
-const { sendError } = require('../lib/functions.js');
+const { sendError, COLORS } = require('../lib/functions.js');
 
 module.exports = {
     name: 'help',
+    category: 'else',
     description: "Affiche toutes les commandes, leur description ainsi que leur usage",
     usage: `${prefix}help [command]`,
     exemple: `${prefix}help || !help info`,
     execute(message, args){
-        let embed = new Discord.RichEmbed().setColor(0xB5E655);
+        let embed = new Discord.RichEmbed().setColor(COLORS['light_green']);
         let stockEmbeds = [];
         const updateReactions = (message, page) => {
             if(stockEmbeds.length > 1){
@@ -41,9 +42,28 @@ module.exports = {
                     if(!message.member.hasPermission(client.commands.get(args[0]).access)) return sendError("Vous n'avez pas la permission requise.", message);
 
                     embed.setTitle(`${prefix}${args[0]} - Informations`);
-                    ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
+                    ['category', 'description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
                         if(client.commands.get(args[0])[property]){
-                            embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                            if(property !== 'category') {
+                                embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                            } else {
+                                let categoryName;
+                                switch(client.commands.get(args[0])[property]) {
+                                    case 'admin':
+                                        categoryName = "Administration";
+                                        break;
+                                    case 'mod':
+                                        categoryName = "Modération";
+                                        break;
+                                    case 'fun':
+                                        categoryName = "Fun";
+                                        break;
+                                    default:
+                                        categoryName = "Divers";
+                                }
+
+                                embed.addField(property.charAt(0).toUpperCase() + property.slice(1), categoryName);
+                            }
                         }
                     });
 
@@ -51,18 +71,56 @@ module.exports = {
                     if(message.author.id !== config.botOwner) return sendError("Vous n'avez pas la permission requise.", message);
 
                     embed.setTitle(`${prefix}${args[0]} - Informations`);
-                    ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
+                    ['category', 'description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
                         if(client.commands.get(args[0])[property]){
-                            embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                            if(property !== 'category') {
+                                embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                            } else {
+                                let categoryName;
+                                switch(client.commands.get(args[0])[property]) {
+                                    case 'admin':
+                                        categoryName = "Administration";
+                                        break;
+                                    case 'mod':
+                                        categoryName = "Modération";
+                                        break;
+                                    case 'fun':
+                                        categoryName = "Fun";
+                                        break;
+                                    default:
+                                        categoryName = "Divers";
+                                }
+
+                                embed.addField(property.charAt(0).toUpperCase() + property.slice(1), categoryName);
+                            }
                         }
                     });
 
                 }
             } else {
                 embed.setTitle(`${prefix}${args[0]} - Informations`);
-                ['description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
+                ['category', 'description', 'aliases', 'usage', 'exemple', 'access'].forEach(property => {
                     if(client.commands.get(args[0])[property]){
-                        embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                        if(property !== 'category') {
+                            embed.addField(property.charAt(0).toUpperCase() + property.slice(1), client.commands.get(args[0])[property]);
+                        } else {
+                            let categoryName;
+                            switch(client.commands.get(args[0])[property]) {
+                                case 'admin':
+                                    categoryName = "Administration";
+                                    break;
+                                case 'mod':
+                                    categoryName = "Modération";
+                                    break;
+                                case 'fun':
+                                    categoryName = "Fun";
+                                    break;
+                                default:
+                                    categoryName = "Divers";
+                            }
+
+                            embed.addField(property.charAt(0).toUpperCase() + property.slice(1), categoryName);
+                        }
                     }
                 });
             }
@@ -71,6 +129,7 @@ module.exports = {
                 message.channel.send(embed);
             }
         } else {
+            embed.setThumbnail(client.user.avatarURL);
             [...client.commands.values()]
                 .forEach((command, index) => {
                     if(command.access) {
@@ -89,7 +148,9 @@ module.exports = {
                     
                     if((index + 1) % 5 === 0){
                         stockEmbeds.push(embed);
-                        embed = new Discord.RichEmbed().setColor(0xB5E655);
+                        embed = new Discord.RichEmbed()
+                                        .setColor(COLORS['light_green'])
+                                        .setThumbnail(client.user.avatarURL);
                     }
                 });
 
@@ -108,23 +169,13 @@ module.exports = {
 
                 client.on("messageReactionAdd", (reaction, user) => {
                     if(reaction.message.id !== embedMessage.id || user !== author || user.bot || '⏮⬅➡⏭'.indexOf(reaction.emoji.name) < 0) return;
-                    
-                    switch (reaction.emoji.name) {
-                        case '⏮':
-                            currentPage = 0
-                            break
-                        case '⬅':
-                            currentPage--
-                            break
-                        case '➡':
-                            currentPage++
-                            break
-                        case '⏭':
-                            currentPage = stockEmbeds.length - 1
-                            break
-                        default:
-                            currentPage = 0
+                    const reactions = {
+                        '⏮': () => currentPage = 0,
+                        '⬅': () => currentPage--,
+                        '➡': () => currentPage++,
+                        '⏭': () => currentPage = stockEmbeds.length - 1
                     }
+                    if (reactions[reaction.emoji.name]) reactions[reaction.emoji.name]();
 
                     embedMessage.clearReactions().then(() => {
                         embedMessage.edit(stockEmbeds[currentPage]);

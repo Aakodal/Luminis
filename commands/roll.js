@@ -3,6 +3,7 @@ const { sendEmbed, sendError, randInt } = require('../lib/functions.js');
 
 module.exports = {
     name: 'roll',
+    category: 'fun',
     description: "Lance un dé virtuel",
     usage: `${prefix}roll [nombre]d<nombre>`,
     exemple: `${prefix}roll 1d6 || !roll d6`,
@@ -19,33 +20,24 @@ module.exports = {
             '9': "Tarentallegra!"
         }
 
-        if(!args[0]) {
-            return sendError("Veuillez insérer un argument.", message);
-        }
+        if(!args[0]) return sendError("Veuillez insérer un argument.", message);
 
         const parameter = args[0].split('d');
         const randPhr = randInt(1, Object.values(randSentence).length);
         if(parameter[0] == '') { // ['', 'number']
-            if(typeof parseInt(parameter[1]) != "number" || isNaN(parameter[1])) {
-                return message.channel.send(randSentence[randPhr]);
-            }
-            if(parameter[1] > 10000) {
-                return sendError("Limite trop grande. Veuillez ne pas dépasser 10,000.", message);
-            }
+            if(typeof parseInt(parameter[1]) != "number" || isNaN(parameter[1])) return message.channel.send(randSentence[randPhr]);
+
+            if(parameter[1] > 10000) return sendError("Limite trop grande. Veuillez ne pas dépasser 10,000.", message);
 
             const random = randInt(1, parameter[1]);
             sendEmbed({color: 'orange', text: `🎲 ${random}`, message});
 
         } else if(typeof parseInt(parameter[0]) == "number" && !isNaN(parameter[0])) { // ['number', 'number']
-            if(typeof parseInt(parameter[1]) != "number" || isNaN(parameter[1])) {
-                return message.channel.send(randSentence[randPhr]);
-            }
-            if(parameter[0] > 100) {
-                return sendError("Nombre de dés trop grand. Veuillez ne pas dépasser 100.", message);
-            }
-            if(parameter[1] > 10000) {
-                return sendError("Limite trop grande. Veuillez ne pas dépasser 10,000.", message);
-            }
+            if(typeof parseInt(parameter[1]) != "number" || isNaN(parameter[1])) return message.channel.send(randSentence[randPhr]);
+
+            if(parameter[0] > 100) return sendError("Nombre de dés trop grand. Veuillez ne pas dépasser 100.", message);
+
+            if(parameter[1] > 10000) return sendError("Limite trop grande. Veuillez ne pas dépasser 10,000.", message);
 
             let list = [];
             for(i = 0; i < parameter[0]; i++) {
@@ -56,8 +48,6 @@ module.exports = {
 
             sendEmbed({color: 'orange', text: `🎲 ( ${list.join(" + ")} ) = ${total}`, message});
 
-        } else {
-            return message.channel.send(randSentence[randPhr]);
-        }
+        } else return message.channel.send(randSentence[randPhr]);
     }
 }

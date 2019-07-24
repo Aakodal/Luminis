@@ -4,6 +4,8 @@ const { sendEmbed, sendError } = require('../lib/functions.js');
 module.exports = {
     name: 'name',
     aliases: [ 'alias' ],
+    category: 'category',
+    // admin, mod, fun, else
     description: "desc",
     usage: `${prefix}usage`,
     exemple: `${prefix}exemple`,

@@ -4,6 +4,7 @@ const { purgeLog } = require('../lib/log/messagePurge.js');
 
 module.exports = {
     name: 'purge',
+    category: 'mod',
     alias: [ 'bulk' ],
     description: "Supprime autant de messages que désiré.",
     usage: `${prefix}purge <int>`,

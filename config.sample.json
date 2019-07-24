@@ -1,6 +1,7 @@
 {
     "prefix": "Prefix here",
     "token": "Your bot token here",
+    "server": "Server ID here",
     "botOwner": "Your Discord ID here",
     "game": {
         "active": "true or false, without quotes",
@@ -16,6 +17,20 @@
     "votes": {
         "anonyme": "true or false, without quotes",
         "channel": "Channel ID here"
+    },
+
+    "verification": {
+        "active": "true or false, without quotes",
+        "channel": "Channel ID here",
+        "roleName": "Role GIVEN name here",
+        "time": "Time before sanction IN SECONDS / 0 to disable, without quotes",
+        "sanction": "kick/ban",
+        "specialRepetition": {
+            "active": "true or false, without quotes",
+            "number": "number of tries before action superior to 1, without quotes",
+            "action": "ban/messageStaff/messageUser/messageBoth",
+            "messageChannel": "Channel ID here"
+        }
     },
 
     "logs": {
@@ -105,6 +120,16 @@
             "dm": "true or false, without quotes"
         },
         "kick": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here",
+            "dm": "true or false, without quotes"
+        },
+        "mute": {
+            "active": "true or false, without quotes",
+            "channel": "Channel ID here",
+            "dm": "true or false, without quotes"
+        },
+        "ban": {
             "active": "true or false, without quotes",
             "channel": "Channel ID here",
             "dm": "true or false, without quotes"
