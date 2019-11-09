@@ -1,5 +1,5 @@
 # Luminis
-Multi-tasks Discord bot made in discord.js by Neshell
+Multi-tasks Discord bot made in discord.js by Neshell. **THIS IS TOTALLY A OLD AND HORRIBLE CODE, PLEASE GO TO [Vitalis](https://github.com/NeshellDev/Vitalis) FOR A BETTER BOT.**
 ## Prerequisites
 ### Node modules
 Before using Luminis, you must have installed [Node.JS](https://nodejs.org) on your computer. Next, inside Luminis folder, open a console and type
